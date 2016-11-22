@@ -162,8 +162,11 @@ require_once('parsedownExtra.php');
         <div id="bg_image" class="full_screen"></div>
         <div id="black_box" class="full_screen"></div>
         <div id="noise_box" class="full_screen"></div>
-        <div id="clear_box" class="container-fluid ruqaa_font outline">
+        <div id="clear_box" class="container-fluid ruqaa_font">
             <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ui-state-highlight style" id="cookie_bar" style="padding:5px">
+                    <span class="ui-icon ui-icon-info"></span>This site uses cookies. Okay?. Okay! Now click to dismiss.
+                </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center">
                     <span class="size_6 outline heading_1">Project Soon!</span>
                 </div>
@@ -228,12 +231,14 @@ require_once('parsedownExtra.php');
                 </div>
             </div>
         </div>
-        <div class="cokie_bar">This site uses cookies! Okay!</div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="jqui/jquery-ui.js"></script>
         <script>
             var k;
             $(document).ready(function(){
+                $("#cookie_bar").click(function(){
+                    $(this).hide();
+                });
                 $("#submit_email").click(function(){
                     var email_obj={};
                     if ($.trim($("#email_id").val())!=""){
@@ -257,7 +262,6 @@ require_once('parsedownExtra.php');
                     $("#error").hide();
                 });
                 //survey form
-                
             });
             
             function ajax_survey(email_obj){

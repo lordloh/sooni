@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet" / -->
         <link href="https://fonts.googleapis.com/css?family=Aref+Ruqaa:700" rel="stylesheet" />
+        <link href="social_media.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <style type="text/css">
         #bg_image{
@@ -76,6 +77,12 @@
             border-left:2px solid;
             font-size:1.15em;
         }
+        .media_row{
+            background:#335;
+            opacity:.6;
+            padding-top:10px;
+            padding-bottom:10px;
+        }
         .black_row{
             background:#000;
             opacity:1;
@@ -83,6 +90,9 @@
             padding-bottom:10px;
         }
         #thank_4_email{
+            display:none;
+        }
+        #error{
             display:none;
         }
         form input{
@@ -97,6 +107,21 @@
         }*/
         .lnk{
             color:#FF5;
+        }
+        .icon_corr{
+            font-size:2em;
+        }
+        a.icon_corr:hover{
+            margin-left:10px;
+            margin-right:10px;
+            text-decoration:none;
+            color:#FFF;
+        }
+        a.icon_corr{
+            color:#FFF;
+        }
+        a.icon_corr:visited{
+            text-decoration:none;
         }
         </style>
     </head>
@@ -125,9 +150,24 @@
                     <span class="heading_3">Please help us out with this short survey</span>
                     <p>
                         <form>
-                            
                         </form>
                     </p>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center media_row">
+                    <a class="icon_corr"><span class="icon-envelop"></span></a>
+                    <a class="icon_corr" href="https://www.facebook.com/bharath.lohray"><span class="icon-facebook2"></span></a>
+                    <a class="icon_corr" href="https://www.twitter.com/lordloh"><span class="icon-twitter"></span></a>
+                    <a class="icon_corr" href="https://www.linkedin.com/in/lohray"><span class="icon-linkedin2"></span></a>
+                    <a class="icon_corr"><span class="icon-instagram"></span></a>
+                    <a class="icon_corr"><span class="icon-pintrest"></span></a>
+                    <a class="icon_corr"><span class="icon-youtube"></span></a>
+                    <a class="icon_corr"><span class="icon-flickr4"></span></a>
+                    <a class="icon_corr"><span class="icon-tumblr2"></span></a>
+                    <a class="icon_corr"><span class="icon-blogger2"></span></a>
+                    <a class="icon_corr"><span class="icon-wordpress"></span></a>
+                    <a class="icon_corr"><span class="icon-reddit"></span></a>
+                    <a class="icon_corr"><span class="icon-stackoverflow"></span></a>
+                    <a class="icon_corr" href="https://github.com/lordloh"><span class="icon-github"></span></a>
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center black_row">
                     <div id="email_form">
@@ -143,7 +183,13 @@
                     <div id="thank_4_email">
                         <span class="heading_3">Thank you.<br/>We shall be in touch.</span>
                         <br/>
-                        <span class="lnk" id="get_form">subscribe another email</span>
+                        <span class="lnk get_email_form">subscribe another email</span>
+                    </div>
+                    <div id="error">
+                        <span class="heading_3">Sorry!</span>
+                        <p>Something went wrong. Please contact us.</p>
+                        <br/>
+                        <span class="lnk get_email_form">subscribe another email</span>
                     </div>
                 </div>
             </div>
@@ -168,23 +214,57 @@
                         }
                     }
                 });
-                $("#get_form").click(function(){
+                // email form
+                $(".get_email_form").click(function(){
                     $("#email_form").show();
                     $("#thank_4_email").hide();
+                    $("#error").hide();
                 });
+                //survey form
+                
             });
-            function ajax_email_info(email_obj){
-                $.ajax({url:"save_email.php", type:"POST", data: email_obj, dataType:"json"} ).done(function(dta,sts,xho){
+            
+            function ajax_survey(email_obj){
+                $.ajax({url:"save_survey.php", type:"POST", data: email_obj, dataType:"json"} ).done(function(dta,sts,xho){
                     if (dta.result==0){
-                        $("#email_id").val('');
-                        $("#email_form").hide();
-                        $("#thank_4_email").show();
+                        
+                        /*$("#email_form").hide();
+                        $("#error").hide();
+                        $("#thank_4_email").show();*/
+                    }else{
+                        /*$("#email_form").hide();
+                        $("#error").show();
+                        $("#thank_4_email").hide();*/
                     }
                     console.log( xho.status+" success ");
                     console.log(dta)
                     k=xho;
                 }).fail(function(d){
-                    console.log("fail:"+d)
+                    /*$("#email_form").hide();
+                    $("#error").show();
+                    $("#thank_4_email").hide();*/
+                });
+            }
+            
+            function ajax_email_info(email_obj){
+                $.ajax({url:"save_email.php", type:"POST", data: email_obj, dataType:"json"} ).done(function(dta,sts,xho){
+                    if (dta.result==0){
+                        $("#email_id").val('');
+                        $("#email_form").hide();
+                        $("#error").hide();
+                        $("#thank_4_email").show();
+                    }else{
+                        $("#email_form").hide();
+                        $("#error").show();
+                        $("#thank_4_email").hide();
+                    }
+                    console.log( xho.status+" success ");
+                    console.log(dta)
+                    k=xho;
+                }).fail(function(d){
+                    $("#email_form").hide();
+                    $("#error").show();
+                    $("#thank_4_email").hide();
                 });
             }
         </script>

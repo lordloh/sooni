@@ -11,4 +11,4 @@ Sooni: <i>What a very simple-minded pun! Anyway, fool, don't mock me.</i><br/>
 </p>
 
 <span class="heading_3">Who uses project Soon!?</span>
-<p class="prose">Project Soon! is used by go getter entrepreneurs with great idea, who start on execution immideately. Our users register a domain and put up a _"Comming Soon"_ page as soon as they get an idea. This lets people who come across the page to leave their email address giving the entrepreneurs a head start with customer acquistion.</p>
+<p class="prose">Project Soon! is used by go getter entrepreneurs with great idea, who start on execution immideately. Our users register a domain and put up a _"Coming Soon"_ page as soon as they get an idea. This lets people who come across the page to leave their email address giving the entrepreneurs a head start with customer acquistion.</p>

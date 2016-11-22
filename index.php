@@ -164,7 +164,7 @@ require_once('parsedownExtra.php');
         <div id="noise_box" class="full_screen"></div>
         <div id="clear_box" class="container-fluid ruqaa_font">
             <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ui-state-highlight style" id="cookie_bar" style="padding:5px">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ui-state-highlight style" id="cookie_bar" style="padding:5px; display:none">
                     <span class="ui-icon ui-icon-info"></span>This site uses cookies. Okay?. Okay! Now click to dismiss.
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center">
@@ -231,13 +231,21 @@ require_once('parsedownExtra.php');
                 </div>
             </div>
         </div>
+        <script src="js.cookie.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="jqui/jquery-ui.js"></script>
         <script>
             var k;
             $(document).ready(function(){
+                console.log(Cookies.get('cookie_info')==true | Cookies.get('cookie_info')!=undefined);
+                if (Cookies.get('cookie_info')==true | Cookies.get('cookie_info')!=undefined){
+                    $("#cookie_bar").hide();
+                }else{
+                    $("#cookie_bar").show();
+                }
                 $("#cookie_bar").click(function(){
                     $(this).hide();
+                    Cookies.set('cookie_info',true,{expires: 1});
                 });
                 $("#email_id").focus(function(){
                     $("#email_id").prop("placeholder","");

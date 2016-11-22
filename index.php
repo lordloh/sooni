@@ -9,6 +9,7 @@ require_once('parsedownExtra.php');
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet" / -->
+        <link href="jqui/jquery-ui.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Aref+Ruqaa:700" rel="stylesheet" />
         <link href="social_media.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -195,30 +196,7 @@ require_once('parsedownExtra.php');
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center media_row">
                     <span class="social_media_icons">
-                        <a><span class="icon-envelop" title="email"></span></a>
-                        <a><span class="icon-key2"></span></a>
-                        <a><span class="icon-phone" title="phone"></span></a>
-                        <a><span class="icon-bubbles3" title="Chat"></span></a>
-                        <a><span class="icon-map" title="Address"></span></a>
-                        <a><span class="icon-graduate" title="CV"></span></a>
-                        <a href="https://www.facebook.com/bharath.lohray"><span title="facebook" class="icon-google-plus3"></span></a>
-                        <a href="https://www.facebook.com/bharath.lohray"><span class="icon-facebook2"></span></a>
-                        <a href="https://www.twitter.com/lordloh"><span class="icon-twitter"></span></a>
-                        <a href="https://www.linkedin.com/in/lohray"><span class="icon-linkedin2"></span></a>
-                        <a><span class="icon-yelp"></span></a>
-                        <a><span class="icon-instagram"></span></a>
-                        <a><span class="icon-pintrest"></span></a>
-                        <a><span class="icon-youtube"></span></a>
-                        <a><span class="icon-vimeo2"></span></a>
-                        <a><span class="icon-flickr4"></span></a>
-                        <a><span class="icon-tumblr2"></span></a>
-                        <a><span class="icon-blogger2"></span></a>
-                        <a><span class="icon-wordpress"></span></a>
-                        <a><span class="icon-reddit"></span></a>
-                        <a><span class="icon-stackoverflow"></span></a>
-                        <a href="https://github.com/lordloh"><span class="icon-github"></span></a>
-                        <a href="https://bitbucket.org/lordloh"><span class="icon-bitbucket"></span></a>
-                        <a><span class="icon-paypal"></span></a>
+                        <?php include('social_media.html'); ?>
                     </span>
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center black_row">
@@ -252,6 +230,7 @@ require_once('parsedownExtra.php');
         </div>
         <div class="cokie_bar">This site uses cookies! Okay!</div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="jqui/jquery-ui.js"></script>
         <script>
             var k;
             $(document).ready(function(){

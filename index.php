@@ -1,6 +1,3 @@
-<?php
-$DB = "sooni.db"
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -85,6 +82,9 @@ $DB = "sooni.db"
             padding-top:10px;
             padding-bottom:10px;
         }
+        #thank_4_email{
+            display:none;
+        }
         form input{
             color:#000;
             font-size:1.2em;
@@ -95,6 +95,9 @@ $DB = "sooni.db"
             outline:#000 solid 1px;
             
         }*/
+        .lnk{
+            color:#FF5;
+        }
         </style>
     </head>
     <body>
@@ -119,42 +122,72 @@ $DB = "sooni.db"
                     <p class="prose">Project Soon! is used by go getter entrepreneurs with great idea, who start on execution immideately. Our users register a domain and put up a <em>"Comming Soon"</em> page as soon as they get an idea. This lets people who come across the page to leave their email address giving the entrepreneurs a head start with customer acquistion.</p>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    
+                    <span class="heading_3">Please help us out with this short survey</span>
+                    <p>
+                        <form>
+                            
+                        </form>
+                    </p>
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center black_row">
-                        <?php
-                            if (array_key_exists('submit',$_POST)){
-                                if (!empty($_POST['email_id'])){
-                                    $email = filter_var($_POST['email_id'], FILTER_SANITIZE_EMAIL);
-                                    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                                        //
-                                        $email_db = new SQLite3($DB);
-                                        $email_db->busyTimeout(1000);
-                                        $email_db->exec('CREATE TABLE IF NOT EXISTS email (email STRING, date STRING, PRIMARY KEY(email))');
-                                        $submit_date = date('Y-m-d H:i:s');
-                                        $ins=$email_db->exec("INSERT OR IGNORE INTO email VALUES('".$email."', '".$submit_date."')");
-                                        $email_db->close();
-                                        echo "<span class=\"heading_3\">Thank you for subscribing.</span><p>We will get in touch.</p>";
-                                    }else{
-                                        echo "<span class=\"heading_3\">Bad email</span>";
-                                    }
-                                }
-                            }else{
-                        ?>
-                    <span class="heading_3">Stay infomed</span>
-                    <p>
-                        <form action="index.php" method="post">
-                        <input type="text" name="email_id" placeholder="bharath.lohray@example.com" style="width:68%" class="center" /><br/><br/>
-                        <input type="submit" name="submit" value="Keep me infomed" />
-                        </form>
-                        <?php
-                            }
-                        ?>
-                    </p>
+                    <div id="email_form">
+                        <span class="heading_3">Stay infomed</span>
+                        <p>
+                            <form>
+                            <input type="text" id="email_id" placeholder="the_exalted_me@example.com" style="width:68%" class="center" /><br/><br/>
+                            May we have your location to optimize our service? <input type="checkbox" id="loc_agree"/> Yes<br/><br/>
+                            <input type="button" id="submit_email" value="Keep me infomed" />
+                            </form>
+                        </p>
+                    </div>
+                    <div id="thank_4_email">
+                        <span class="heading_3">Thank you.<br/>We shall be in touch.</span>
+                        <br/>
+                        <span class="lnk" id="get_form">subscribe another email</span>
+                    </div>
                 </div>
             </div>
         </div>
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>
+            var k;
+            $(document).ready(function(){
+                $("#submit_email").click(function(){
+                    var email_obj={};
+                    if ($.trim($("#email_id").val())!=""){
+                        email_obj['email_id']=$("#email_id").val();
+                        if($('#loc_agree').prop("checked")){
+                             if (navigator.geolocation){
+                                navigator.geolocation.getCurrentPosition(function(p){
+                                    email_obj['geo']=p.coords;
+                                    ajax_email_info(email_obj);
+                                });
+                             }
+                        }else{
+                            ajax_email_info(email_obj);
+                        }
+                    }
+                });
+                $("#get_form").click(function(){
+                    $("#email_form").show();
+                    $("#thank_4_email").hide();
+                });
+            });
+            function ajax_email_info(email_obj){
+                $.ajax({url:"save_email.php", type:"POST", data: email_obj, dataType:"json"} ).done(function(dta,sts,xho){
+                    if (dta.result==0){
+                        $("#email_id").val('');
+                        $("#email_form").hide();
+                        $("#thank_4_email").show();
+                    }
+                    console.log( xho.status+" success ");
+                    console.log(dta)
+                    k=xho;
+                }).fail(function(d){
+                    console.log("fail:"+d)
+                });
+            }
+        </script>
     </body>
 </html>
     

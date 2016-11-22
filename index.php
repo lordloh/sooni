@@ -1,7 +1,12 @@
+<?php
+require_once('parsedown.php');
+require_once('parsedownExtra.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Soon!</title>
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet" / -->
         <link href="https://fonts.googleapis.com/css?family=Aref+Ruqaa:700" rel="stylesheet" />
@@ -78,10 +83,31 @@
             font-size:1.15em;
         }
         .media_row{
-            background:#335;
+            word-spacing:15px;
+            background:#353;
             opacity:.6;
-            padding-top:10px;
-            padding-bottom:10px;
+            padding-top:20px;
+            padding-bottom:20px;
+        }
+        .social_media_icons{
+            font-size:2em;
+        }
+        .social_media_icons a{
+            text-decoration:none;
+            color:#FFF;
+        }
+        .social_media_icons a:visited{
+            color:#FFF;
+        }
+        .social_media_icons a:link{
+            color:#FFF;
+        }
+        .social_media_icons a:hover{
+            text-shadow: 0px 7px 30px rgba(150, 255, 150, 1);
+            font-size:0.95;
+        }
+        .social_media_icons a:active{
+            color:#020;
         }
         .black_row{
             background:#000;
@@ -108,20 +134,26 @@
         .lnk{
             color:#FF5;
         }
-        .icon_corr{
-            font-size:2em;
+        .surveyQ{
+            margin:25px 0px 25px;
         }
-        a.icon_corr:hover{
-            margin-left:10px;
-            margin-right:10px;
-            text-decoration:none;
-            color:#FFF;
+        .surveyQ input{
+            color:#000;
         }
-        a.icon_corr{
-            color:#FFF;
+        .surveyQ textarea{
+            color:#000;
         }
-        a.icon_corr:visited{
-            text-decoration:none;
+        .cookie_bar{
+            position:absolute;
+            top:0px;
+            right:0px;
+            left:0px;
+            background:#FFF;
+            color:#000;
+            z-index:9000;
+        }
+        .footer{
+            font-size:12px;
         }
         </style>
     </head>
@@ -135,39 +167,59 @@
                     <span class="size_6 outline heading_1">Project Soon!</span>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    <span class="heading_3">What is project Soon!?</span>
-                    <p class="prose">Project Soon! is a place holder system for your next great idea. It provides a template desigend to wet your user's apetite, collect an email address, provide them your social media endpoints and more.</p>
-                    <span class="heading_3">Why is it called Soon!?</span>
-                    <p class="prose">When I started building this "Coming Soon" project, The first thing that came to my mind was the hilarius dialog between Sooni and Naseem Ali Khan from the TV show, Indian Summers.</p>
-                    <p class="quote">Khan: <i>Ah, the terror of tort! So why are you not in court now? - Today? </i><br/>
-                    Sooni: <i>I will be, soon.</i><br/>
-                    Khan: <i>Soon? This is why they call you Sooni?</i><br/>
-                    Sooni: <i>What a very simple-minded pun! Anyway, fool, don't mock me.</i></p>
-                    <span class="heading_3">Who uses project Soon!?</span>
-                    <p class="prose">Project Soon! is used by go getter entrepreneurs with great idea, who start on execution immideately. Our users register a domain and put up a <em>"Comming Soon"</em> page as soon as they get an idea. This lets people who come across the page to leave their email address giving the entrepreneurs a head start with customer acquistion.</p>
+                    <?php
+                        $md = new ParsedownExtra();
+                        $col_left=@file_get_contents('left.md');
+                        echo $md->text($col_left);
+                    ?>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                     <span class="heading_3">Please help us out with this short survey</span>
                     <p>
-                        <form>
-                        </form>
+                        <div class="surveyQ">
+                            <p calss="prose">How many domains do you own?</p>
+                            <input type="number" id="num_domains" min="0" />
+                        </div>
+                        <div class="surveyQ">
+                            <p calss="prose">Did you buy any of them from a domain shark?</p>
+                            <input type="checkbox" id="shark"> Yes
+                        </div>
+                        <div class="surveyQ">
+                            <p calss="prose">Where do you host your site?</p>
+                            <textarea rows="4" style="width:100%" placeholder="aws, rackspace, google, mom&pop hosting, azure"></textarea>
+                        </div>
+                        <div class="surveyQ">
+                            <input type="button" id="survey_save" value="Save" />
+                        </div>
                     </p>
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center media_row">
-                    <a class="icon_corr"><span class="icon-envelop"></span></a>
-                    <a class="icon_corr" href="https://www.facebook.com/bharath.lohray"><span class="icon-facebook2"></span></a>
-                    <a class="icon_corr" href="https://www.twitter.com/lordloh"><span class="icon-twitter"></span></a>
-                    <a class="icon_corr" href="https://www.linkedin.com/in/lohray"><span class="icon-linkedin2"></span></a>
-                    <a class="icon_corr"><span class="icon-instagram"></span></a>
-                    <a class="icon_corr"><span class="icon-pintrest"></span></a>
-                    <a class="icon_corr"><span class="icon-youtube"></span></a>
-                    <a class="icon_corr"><span class="icon-flickr4"></span></a>
-                    <a class="icon_corr"><span class="icon-tumblr2"></span></a>
-                    <a class="icon_corr"><span class="icon-blogger2"></span></a>
-                    <a class="icon_corr"><span class="icon-wordpress"></span></a>
-                    <a class="icon_corr"><span class="icon-reddit"></span></a>
-                    <a class="icon_corr"><span class="icon-stackoverflow"></span></a>
-                    <a class="icon_corr" href="https://github.com/lordloh"><span class="icon-github"></span></a>
+                    <span class="social_media_icons">
+                        <a><span class="icon-envelop" title="email"></span></a>
+                        <a><span class="icon-key2"></span></a>
+                        <a><span class="icon-phone" title="phone"></span></a>
+                        <a><span class="icon-bubbles3" title="Chat"></span></a>
+                        <a><span class="icon-map" title="Address"></span></a>
+                        <a><span class="icon-graduate" title="CV"></span></a>
+                        <a href="https://www.facebook.com/bharath.lohray"><span title="facebook" class="icon-google-plus3"></span></a>
+                        <a href="https://www.facebook.com/bharath.lohray"><span class="icon-facebook2"></span></a>
+                        <a href="https://www.twitter.com/lordloh"><span class="icon-twitter"></span></a>
+                        <a href="https://www.linkedin.com/in/lohray"><span class="icon-linkedin2"></span></a>
+                        <a><span class="icon-yelp"></span></a>
+                        <a><span class="icon-instagram"></span></a>
+                        <a><span class="icon-pintrest"></span></a>
+                        <a><span class="icon-youtube"></span></a>
+                        <a><span class="icon-vimeo2"></span></a>
+                        <a><span class="icon-flickr4"></span></a>
+                        <a><span class="icon-tumblr2"></span></a>
+                        <a><span class="icon-blogger2"></span></a>
+                        <a><span class="icon-wordpress"></span></a>
+                        <a><span class="icon-reddit"></span></a>
+                        <a><span class="icon-stackoverflow"></span></a>
+                        <a href="https://github.com/lordloh"><span class="icon-github"></span></a>
+                        <a href="https://bitbucket.org/lordloh"><span class="icon-bitbucket"></span></a>
+                        <a><span class="icon-paypal"></span></a>
+                    </span>
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center black_row">
                     <div id="email_form">
@@ -175,7 +227,7 @@
                         <p>
                             <form>
                             <input type="text" id="email_id" placeholder="the_exalted_me@example.com" style="width:68%" class="center" /><br/><br/>
-                            May we have your location to optimize our service? <input type="checkbox" id="loc_agree"/> Yes<br/><br/>
+                            <div class="checkbox"><label>May we have your location to optimize our service?<br/><input type="checkbox" id="loc_agree"/>Yes</label></div><br/><br/>
                             <input type="button" id="submit_email" value="Keep me infomed" />
                             </form>
                         </p>
@@ -192,8 +244,13 @@
                         <span class="lnk get_email_form">subscribe another email</span>
                     </div>
                 </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <hr/>
+                    <p class="footer">Powered by project <a href="https://github.com/lordloh/sooni">soon!</a>. Licensed under the MIT License.</p>
+                </div>
             </div>
         </div>
+        <div class="cokie_bar">This site uses cookies! Okay!</div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
             var k;

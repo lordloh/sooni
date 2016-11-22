@@ -239,6 +239,11 @@ require_once('parsedownExtra.php');
                 $("#cookie_bar").click(function(){
                     $(this).hide();
                 });
+                $("#email_id").focus(function(){
+                    $("#email_id").prop("placeholder","");
+                }).blur(function(){
+                    $("#email_id").prop("placeholder","me@example.com");
+                });
                 $("#submit_email").click(function(){
                     var email_obj={};
                     if ($.trim($("#email_id").val())!=""){

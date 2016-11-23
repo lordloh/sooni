@@ -180,7 +180,7 @@ require_once('parsedownExtra.php');
                         <p class="prose">Please try again after some time.</p>
                         <span class="msg"></span>
                     </div>
-                    <div id="survey_form">
+                    <div id="survey_form" class="not_now">
                         <span class="heading_3">Please help us out with this short survey</span>
                         <div class="surveyQ">
                             <p calss="prose">How many domains do you own?</p>
@@ -243,6 +243,13 @@ require_once('parsedownExtra.php');
                     $("#cookie_bar").hide();
                 }else{
                     $("#cookie_bar").show();
+                }
+                if (Cookies.get('survey_done')==false | Cookies.get('survey_done')!=undefined){
+                    $("#survey_form").hide();
+                    $("#survey_thank").show();
+                }else{
+                    $("#survey_thank").hide();
+                    $("#survey_form").show();
                 }
                 $("#cookie_bar").click(function(){
                     $(this).hide();

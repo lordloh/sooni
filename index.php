@@ -49,15 +49,6 @@ require_once('parsedownExtra.php');
             letter-spacing: 0.02em;
             word-spacing: 0.5em;
         }
-        .size_4{
-            font-size: 4em;
-        }
-        .size_6{
-            font-size: 6em;
-        }
-        .size_8{
-            font-size: 8em;
-        }
         .center{
             text-align:center;
         }
@@ -156,6 +147,9 @@ require_once('parsedownExtra.php');
         .footer{
             font-size:12px;
         }
+        .not_now{
+            display:none;
+        }
         </style>
     </head>
     <body>
@@ -168,7 +162,7 @@ require_once('parsedownExtra.php');
                     <span class="ui-icon ui-icon-info"></span>This site uses cookies. Okay?. Okay! Now click to dismiss.
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center">
-                    <span class="size_6 outline heading_1">Project Soon!</span>
+                    <span class="outline heading_1">Project Soon!</span>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                     <?php
@@ -178,8 +172,16 @@ require_once('parsedownExtra.php');
                     ?>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    <span class="heading_3">Please help us out with this short survey</span>
-                    <p>
+                    <div id="survey_thank" class="not_now">
+                        <span class="heading_3">Thank you for your response</span>
+                    </div>
+                    <div id="survey_err" class="not_now">
+                        <span class="heading_3">Something went wrong.</span>
+                        <p class="prose">Please try again after some time.</p>
+                        <span class="msg"></span>
+                    </div>
+                    <div id="survey_form">
+                        <span class="heading_3">Please help us out with this short survey</span>
                         <div class="surveyQ">
                             <p calss="prose">How many domains do you own?</p>
                             <input type="number" id="num_domains" min="0" />
@@ -190,12 +192,12 @@ require_once('parsedownExtra.php');
                         </div>
                         <div class="surveyQ">
                             <p calss="prose">Where do you host your site?</p>
-                            <textarea rows="4" style="width:100%" placeholder="aws, rackspace, google, mom&pop hosting, azure"></textarea>
+                            <textarea id="host" rows="4" style="width:100%" placeholder="aws, rackspace, google, mom&pop hosting, azure" class="placeholder_replace"></textarea>
                         </div>
                         <div class="surveyQ">
                             <input type="button" id="survey_save" value="Save" />
                         </div>
-                    </p>
+                    </div>
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center media_row">
                     <span class="social_media_icons">
@@ -207,7 +209,7 @@ require_once('parsedownExtra.php');
                         <span class="heading_3">Stay infomed</span>
                         <p>
                             <form>
-                            <input type="text" id="email_id" placeholder="the_exalted_me@example.com" style="width:68%" class="center" /><br/><br/>
+                            <input type="text" id="email_id" placeholder="me@example.com" style="width:68%" class="center placeholder_replace" /><br/><br/>
                             <div class="checkbox"><label>May we have your location to optimize our service?<br/><input type="checkbox" id="loc_agree"/>Yes</label></div><br/><br/>
                             <input type="button" id="submit_email" value="Keep me infomed" />
                             </form>
@@ -237,7 +239,6 @@ require_once('parsedownExtra.php');
         <script>
             var k;
             $(document).ready(function(){
-                console.log(Cookies.get('cookie_info')==true | Cookies.get('cookie_info')!=undefined);
                 if (Cookies.get('cookie_info')==true | Cookies.get('cookie_info')!=undefined){
                     $("#cookie_bar").hide();
                 }else{
@@ -247,11 +248,18 @@ require_once('parsedownExtra.php');
                     $(this).hide();
                     Cookies.set('cookie_info',true,{expires: 1});
                 });
-                $("#email_id").focus(function(){
-                    $("#email_id").prop("placeholder","");
-                }).blur(function(){
-                    $("#email_id").prop("placeholder","me@example.com");
+                $("#d_box").dialog({autoOpen:false});
+                $(".d_box_info").click(function(){
+                    $("#d_box").html(($(this).attr("data-info")));
+                    $("#d_box").dialog("open");
                 });
+                $(".placeholder_replace").focus(function(){
+                    $(this).attr("data-placeholder",$(this).attr("placeholder"))
+                    $(this).prop("placeholder","");
+                }).blur(function(){
+                    $(this).prop("placeholder",$(this).attr("data-placeholder"));
+                });
+                
                 $("#submit_email").click(function(){
                     var email_obj={};
                     if ($.trim($("#email_id").val())!=""){
@@ -268,6 +276,13 @@ require_once('parsedownExtra.php');
                         }
                     }
                 });
+                $("#survey_save").click(function(){
+                    var survey_obj={};
+                    survey_obj['num_domains']=$("#num_domains").val();
+                    survey_obj['shark']=($("#shark").prop("checked"))?1:0;
+                    survey_obj['host']=$("#host").val();
+                    ajax_survey(survey_obj);
+                });
                 // email form
                 $(".get_email_form").click(function(){
                     $("#email_form").show();
@@ -277,25 +292,28 @@ require_once('parsedownExtra.php');
                 //survey form
             });
             
-            function ajax_survey(email_obj){
-                $.ajax({url:"save_survey.php", type:"POST", data: email_obj, dataType:"json"} ).done(function(dta,sts,xho){
+            function ajax_survey(survey_obj){
+                console.log(survey_obj);
+                $.ajax({url:"save_survey.php", type:"POST", data: survey_obj, dataType:"json"} ).done(function(dta,sts,xho){
                     if (dta.result==0){
-                        
-                        /*$("#email_form").hide();
-                        $("#error").hide();
-                        $("#thank_4_email").show();*/
+                        Cookies.set('survey_done',true,{expires: 6});
+                        $("#survey_form").hide();
+                        $("#survey_err").hide();
+                        $("#survey_thank").show();
                     }else{
-                        /*$("#email_form").hide();
-                        $("#error").show();
-                        $("#thank_4_email").hide();*/
+                        console.log("Something went wrong");
+                        $("#survey_err > .msg").html("<pre>"+dta+"</pre>");
+                        $("#survey_form").hide();
+                        $("#survey_err").show();
+                        $("#survey_thank").hide();
                     }
                     console.log( xho.status+" success ");
-                    console.log(dta)
                     k=xho;
                 }).fail(function(d){
-                    /*$("#email_form").hide();
-                    $("#error").show();
-                    $("#thank_4_email").hide();*/
+                    $("#survey_err > .msg").html("<pre>"+dta+"</pre>");
+                    $("#survey_form").hide();
+                    $("#survey_err").show();
+                    $("#survey_thank").hide();
                 });
             }
             
@@ -311,8 +329,7 @@ require_once('parsedownExtra.php');
                         $("#error").show();
                         $("#thank_4_email").hide();
                     }
-                    console.log( xho.status+" success ");
-                    console.log(dta)
+                    console.log("Email AJAX Success");
                     k=xho;
                 }).fail(function(d){
                     $("#email_form").hide();

@@ -211,7 +211,7 @@ require_once('parsedownExtra.php');
                             <form>
                             <input type="email" id="email_id" placeholder="me@example.com" style="width:68%" class="center placeholder_replace" /><br/><br/>
                             <div class="checkbox"><label>May we have your location to optimize our service?<br/><input type="checkbox" id="loc_agree"/>Yes</label></div><br/><br/>
-                            <input type="button" id="submit_email" value="Keep me infomed" />
+                            <input type="button" id="submit_email" value="Keep me infomed"/>
                             </form>
                         </p>
                     </div>
@@ -239,12 +239,13 @@ require_once('parsedownExtra.php');
         <script>
             var k;
             $(document).ready(function(){
-                if (Cookies.get('cookie_info')==true | Cookies.get('cookie_info')!=undefined){
+                var Cookies2 = Cookies.noConflict();
+                if (Cookies2.get('cookie_info')==true | Cookies2.get('cookie_info')!=undefined){
                     $("#cookie_bar").hide();
                 }else{
                     $("#cookie_bar").show();
                 }
-                if (Cookies.get('survey_done')==false | Cookies.get('survey_done')!=undefined){
+                if (Cookies2.get('survey_done')==false | Cookies2.get('survey_done')!=undefined){
                     $("#survey_form").hide();
                     $("#survey_thank").show();
                 }else{
@@ -253,7 +254,7 @@ require_once('parsedownExtra.php');
                 }
                 $("#cookie_bar").click(function(){
                     $(this).hide();
-                    Cookies.set('cookie_info',true,{expires: 1});
+                    Cookies2.set('cookie_info',true,{expires: 1});
                 });
                 $("#d_box").dialog({autoOpen:false});
                 $(".d_box_info").click(function(){
@@ -303,7 +304,7 @@ require_once('parsedownExtra.php');
                 console.log(survey_obj);
                 $.ajax({url:"save_survey.php", type:"POST", data: survey_obj, dataType:"json"} ).done(function(dta,sts,xho){
                     if (dta.result==0){
-                        Cookies.set('survey_done',true,{expires: 6});
+                        Cookies2.set('survey_done',true,{expires: 6});
                         $("#survey_form").hide();
                         $("#survey_err").hide();
                         $("#survey_thank").show();

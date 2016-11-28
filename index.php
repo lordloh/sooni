@@ -209,7 +209,7 @@ require_once('parsedownExtra.php');
                         <span class="heading_3">Stay infomed</span>
                         <p>
                             <form>
-                            <input type="text" id="email_id" placeholder="me@example.com" style="width:68%" class="center placeholder_replace" /><br/><br/>
+                            <input type="email" id="email_id" placeholder="me@example.com" style="width:68%" class="center placeholder_replace" /><br/><br/>
                             <div class="checkbox"><label>May we have your location to optimize our service?<br/><input type="checkbox" id="loc_agree"/>Yes</label></div><br/><br/>
                             <input type="button" id="submit_email" value="Keep me infomed" />
                             </form>

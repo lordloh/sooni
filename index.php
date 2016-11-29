@@ -9,7 +9,7 @@ require_once('parsedownExtra.php');
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet" / -->
-        <link href="jqui/jquery-ui.css" rel="stylesheet">
+        <link href="js/jquery-ui.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Aref+Ruqaa:700" rel="stylesheet" />
         <link href="social_media.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -17,6 +17,7 @@ require_once('parsedownExtra.php');
         #bg_image{
             background:url('clock.jpg') no-repeat center center fixed;
             background-size:cover;
+            z-index:-10;
         }
         .row {
             margin: 0px;
@@ -38,11 +39,13 @@ require_once('parsedownExtra.php');
             /*background:#000;*/
             background:url('noise.png') repeat;
             color:#fff;
+            z-index:-9;
         }
         #clear_box{
             opacity: 1;
             color:#fff;
             padding:5px;
+            z-index:-8;
         }
         .ruqaa_font{
             font-family: 'Aref Ruqaa', serif;
@@ -100,6 +103,9 @@ require_once('parsedownExtra.php');
         }
         .social_media_icons a:active{
             color:#020;
+        }
+        .popover{
+            color:#000;
         }
         .black_row{
             background:#000;
@@ -204,6 +210,8 @@ require_once('parsedownExtra.php');
                         <?php include('social_media.html'); ?>
                     </span>
                 </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center" id="social_media_popover">
+                </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center black_row">
                     <div id="email_form">
                         <span class="heading_3">Stay infomed</span>
@@ -235,10 +243,29 @@ require_once('parsedownExtra.php');
         </div>
         <script src="js.cookie.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="jqui/jquery-ui.js"></script>
+        <!--<script src="js/jquery-ui.js"></script>-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="js/magicsuggest-min.js"></script>
         <script>
-            var k;
+            var open_popO=null;
             $(document).ready(function(){
+                $(".ttip").tooltip({
+                    container:'#social_media_popover',
+                    placement:'bottom'
+                });
+                $(".popO").popover({
+                    container:'#social_media_popover',
+                    trigger:'manual'
+                });
+                $('.popO').click(function(){
+                    console.log($(this).attr("data-poppedUp"));
+                    if ($(this).attr('data-poppedUp')!="true"){
+                        $(".popO").not(this).popover('hide').attr("data-poppedUp","false")
+                        $(this).attr("data-poppedUp","true").popover('show');
+                    }else{
+                        $(this).attr("data-poppedUp","false").popover('hide');
+                    }
+                });
                 var Cookies2 = Cookies.noConflict();
                 if (Cookies2.get('cookie_info')==true | Cookies2.get('cookie_info')!=undefined){
                     $("#cookie_bar").hide();
@@ -255,11 +282,6 @@ require_once('parsedownExtra.php');
                 $("#cookie_bar").click(function(){
                     $(this).hide();
                     Cookies2.set('cookie_info',true,{expires: 1});
-                });
-                $("#d_box").dialog({autoOpen:false});
-                $(".d_box_info").click(function(){
-                    $("#d_box").html(($(this).attr("data-info")));
-                    $("#d_box").dialog("open");
                 });
                 $(".placeholder_replace").focus(function(){
                     $(this).attr("data-placeholder",$(this).attr("placeholder"))

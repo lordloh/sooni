@@ -9,9 +9,10 @@ require_once('parsedownExtra.php');
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- link href="https://fonts.googleapis.com/css?family=Mogra" rel="stylesheet" / -->
-        <link href="js/jquery-ui.css" rel="stylesheet">
+        <!-- link href="js/jquery-ui.css" rel="stylesheet"/ -->
         <link href="https://fonts.googleapis.com/css?family=Aref+Ruqaa:700" rel="stylesheet" />
         <link href="social_media.css" rel="stylesheet" />
+        <link href="js/jquery.tagsinput.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <style type="text/css">
         #bg_image{
@@ -201,6 +202,10 @@ require_once('parsedownExtra.php');
                             <textarea id="host" rows="4" style="width:100%" placeholder="aws, rackspace, google, mom&pop hosting, azure" class="placeholder_replace"></textarea>
                         </div>
                         <div class="surveyQ">
+                            <p calss="prose">Where do you host your site?</p>
+                            <input id="host_names" />
+                        </div>
+                        <div class="surveyQ">
                             <input type="button" id="survey_save" value="Save" />
                         </div>
                     </div>
@@ -245,10 +250,12 @@ require_once('parsedownExtra.php');
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <!--<script src="js/jquery-ui.js"></script>-->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="js/magicsuggest-min.js"></script>
+        <script src="js/jquery.tagsinput.min.js"></script>
         <script>
             var open_popO=null;
             $(document).ready(function(){
+                //$('#host_name').magicSuggest();
+                $('#host_names').tagsInput();
                 $(".ttip").tooltip({
                     container:'#social_media_popover',
                     placement:'bottom'

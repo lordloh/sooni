@@ -271,6 +271,7 @@ require_once('parsedownExtra.php');
                 host_nt=$('#host_names').tagging({
                     "edit-on-delete": false,
                     "no-spacebar": true,
+                    "no-backspace": true,
                     "tag-char":'<span class="glyphicon glyphicon-cloud"></span>',
                     "type-zone-class":"tag_edit_zone",
                     "forbidden-chars": [",", "?"]

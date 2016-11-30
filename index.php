@@ -207,15 +207,15 @@ require_once('parsedownExtra.php');
                     <div id="survey_form" class="not_now">
                         <span class="heading_3">Please help us out with this short survey</span>
                         <div class="surveyQ">
-                            <p calss="prose">How many domains do you own?</p>
+                            <p class="prose">How many domains do you own?</p>
                             <input type="number" id="num_domains" min="0" />
                         </div>
                         <div class="surveyQ">
-                            <p calss="prose">Did you buy any of them from a domain shark?</p>
+                            <p class="prose">Did you buy any of them from a domain shark?</p>
                             <input type="checkbox" id="shark"> Yes
                         </div>
                         <div class="surveyQ">
-                            <p calss="prose">Where do you host your site?</p>
+                            <p class="prose">Where do you host your site?</p>
                             <div data-tags-input-name="tag" id="host_names">AWS, Google, azure, rackspace, heroku, Mom &amp; Pop Hostin'</div>
                         </div>
                         <div class="surveyQ">
@@ -233,13 +233,11 @@ require_once('parsedownExtra.php');
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center black_row">
                     <div id="email_form">
                         <span class="heading_3">Stay infomed</span>
-                        <p>
                             <form>
                             <input type="email" id="email_id" placeholder="me@example.com" style="width:68%" class="center placeholder_replace" /><br/><br/>
                             <div class="checkbox"><label>May we have your location to optimize our service?<br/><input type="checkbox" id="loc_agree"/>Yes</label></div><br/><br/>
                             <input type="button" id="submit_email" value="Keep me infomed"/>
                             </form>
-                        </p>
                     </div>
                     <div id="thank_4_email">
                         <span class="heading_3">Thank you.<br/>We shall be in touch.</span>

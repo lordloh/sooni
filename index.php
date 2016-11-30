@@ -272,6 +272,7 @@ require_once('parsedownExtra.php');
                     "no-backspace": true,
                     "tag-char":'<span class="glyphicon glyphicon-cloud"></span>',
                     "type-zone-class":"tag_edit_zone",
+                    "case-sensitive":true,
                     "forbidden-chars": [",", "?"]
                 });
                 $host_name_tags=host_nt[0];

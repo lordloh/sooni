@@ -157,6 +157,9 @@ require_once('parsedownExtra.php');
         .not_now{
             display:none;
         }
+        .black_text{
+            color:#000;
+        }
         </style>
     </head>
     <body>
@@ -165,8 +168,8 @@ require_once('parsedownExtra.php');
         <div id="noise_box" class="full_screen"></div>
         <div id="clear_box" class="container-fluid ruqaa_font">
             <div class="row">
-                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ui-state-highlight style" id="cookie_bar" style="padding:5px; display:none">
-                    <span class="ui-icon ui-icon-info"></span>This site uses cookies. Okay?. Okay! Now click to dismiss.
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 bg-info black_text" id="cookie_bar" style="padding:5px; display:none">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> This site uses cookies. Okay? Okay! Now click to dismiss.
                 </div>
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center">
                     <span class="outline heading_1">Project Soon!</span>
@@ -199,11 +202,7 @@ require_once('parsedownExtra.php');
                         </div>
                         <div class="surveyQ">
                             <p calss="prose">Where do you host your site?</p>
-                            <textarea id="host" rows="4" style="width:100%" placeholder="aws, rackspace, google, mom&pop hosting, azure" class="placeholder_replace"></textarea>
-                        </div>
-                        <div class="surveyQ">
-                            <p calss="prose">Where do you host your site?</p>
-                            <input id="host_names" />
+                            <input id="host_names"  value="Amazon Web Services,Rackspace,Heroku,Mom &amp; Pop Hostin',Google Cloud,Azure"/>
                         </div>
                         <div class="surveyQ">
                             <input type="button" id="survey_save" value="Save" />
@@ -252,10 +251,13 @@ require_once('parsedownExtra.php');
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="js/jquery.tagsinput.min.js"></script>
         <script>
-            var open_popO=null;
+            var Cookies2 = Cookies.noConflict();
             $(document).ready(function(){
-                //$('#host_name').magicSuggest();
-                $('#host_names').tagsInput();
+                $('#host_names').tagsInput({
+                    'height':'100px',
+                    'width':'100%',
+                    'interactive':true,
+                });
                 $(".ttip").tooltip({
                     container:'#social_media_popover',
                     placement:'bottom'
@@ -273,7 +275,6 @@ require_once('parsedownExtra.php');
                         $(this).attr("data-poppedUp","false").popover('hide');
                     }
                 });
-                var Cookies2 = Cookies.noConflict();
                 if (Cookies2.get('cookie_info')==true | Cookies2.get('cookie_info')!=undefined){
                     $("#cookie_bar").hide();
                 }else{
@@ -317,7 +318,7 @@ require_once('parsedownExtra.php');
                     var survey_obj={};
                     survey_obj['num_domains']=$("#num_domains").val();
                     survey_obj['shark']=($("#shark").prop("checked"))?1:0;
-                    survey_obj['host']=$("#host").val();
+                    survey_obj['host']=$("#host_names").val();
                     ajax_survey(survey_obj);
                 });
                 // email form

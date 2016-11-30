@@ -12,7 +12,7 @@ require_once('parsedownExtra.php');
         <!-- link href="js/jquery-ui.css" rel="stylesheet"/ -->
         <link href="https://fonts.googleapis.com/css?family=Aref+Ruqaa:700" rel="stylesheet" />
         <link href="social_media.css" rel="stylesheet" />
-        <link href="js/jquery.tagsinput.min.css" rel="stylesheet" />
+        <link href="js/tagging.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <style type="text/css">
         #bg_image{
@@ -160,6 +160,20 @@ require_once('parsedownExtra.php');
         .black_text{
             color:#000;
         }
+        .tag_edit_zone{
+            color:#FFF;
+            background:rgba(0,0,0,0);
+            border:0px;
+            outline: none;
+            border-bottom:1px solid #fff;
+        }
+        .tag_edit_zone:focus{
+            color:#FFF;
+            background:rgba(0,0,0,0);
+            border:0px;
+            outline: none;
+            border-bottom:1px solid #fff;
+        }
         </style>
     </head>
     <body>
@@ -202,7 +216,7 @@ require_once('parsedownExtra.php');
                         </div>
                         <div class="surveyQ">
                             <p calss="prose">Where do you host your site?</p>
-                            <input id="host_names"  value="Amazon Web Services,Rackspace,Heroku,Mom &amp; Pop Hostin',Google Cloud,Azure"/>
+                            <div data-tags-input-name="tag" id="host_names">AWS, Google, azure, rackspace, heroku, Mom &amp; Pop Hostin'</div>
                         </div>
                         <div class="surveyQ">
                             <input type="button" id="survey_save" value="Save" />
@@ -249,15 +263,19 @@ require_once('parsedownExtra.php');
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <!--<script src="js/jquery-ui.js"></script>-->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="js/jquery.tagsinput.min.js"></script>
+        <script src="js/tagging.min.js"></script>
         <script>
             var Cookies2 = Cookies.noConflict();
+            var $host_name_tags, host_nt;
             $(document).ready(function(){
-                $('#host_names').tagsInput({
-                    'height':'100px',
-                    'width':'100%',
-                    'interactive':true,
+                host_nt=$('#host_names').tagging({
+                    "edit-on-delete": false,
+                    "no-spacebar": true,
+                    "tag-char":'<span class="glyphicon glyphicon-cloud"></span>',
+                    "type-zone-class":"tag_edit_zone",
+                    "forbidden-chars": [",", "?"]
                 });
+                $host_name_tags=host_nt[0];
                 $(".ttip").tooltip({
                     container:'#social_media_popover',
                     placement:'bottom'
@@ -318,7 +336,8 @@ require_once('parsedownExtra.php');
                     var survey_obj={};
                     survey_obj['num_domains']=$("#num_domains").val();
                     survey_obj['shark']=($("#shark").prop("checked"))?1:0;
-                    survey_obj['host']=$("#host_names").val();
+                    //survey_obj['host']=$("#host_names").val();
+                    survey_obj['host']=$host_name_tags.tagging("getTags");
                     ajax_survey(survey_obj);
                 });
                 // email form
